@@ -1,0 +1,51 @@
+﻿@model D_ASP_1.Models.InsuranceViewModel
+
+@{
+    ViewData["Title"] = "Калькулятор автоцивілки";
+}
+
+<div class="container mt-4">
+    <div class="mt-4 alert alert-danger" style="color: red;background-color: #f8d7da;border-color: #f5c6cb;">
+        <h4>@Model.ErrorMessage</h4>
+    </div>
+
+    <div class="card p-4 shadow-sm">
+        <h3>Введіть дані для розрахунку</h3>
+    
+        <form asp-controller="Insurance" asp-action="Index" method="post" class="mt-4">
+        
+            <div class="mb-3">
+                <label for="EngineCapacity" class="form-label">Об'єм двигуна (см³):</label>
+                <input type="number" asp-for="EngineCapacity" class="form-control" id="EngineCapacity" placeholder="Наприклад: 1500" required />
+            </div>
+
+            <div class="mb-3">
+                <label for="CityType" class="form-label">Місто реєстрації:</label>
+                <select asp-for="CityType" class="form-select" id="CityType">
+                    <option value="Kyiv">Київ</option>
+                    <option value="LargeCity">Велике місто</option>
+                    <option value="SmallTown">Інше (мале місто/село)</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label for="DriverExperienceYears" class="form-label">Стаж водіння (років):</label>
+                <input type="number" asp-for="DriverExperienceYears" class="form-control" id="DriverExperienceYears" placeholder="Наприклад: 5" required />
+            </div>
+
+            <div class="mb-3 form-check">
+                <input type="checkbox" asp-for="HasDiscountCategory" class="form-check-input" id="HasDiscountCategory" />
+                <label for="HasDiscountCategory" class="form-check-label">Наявність пільг (пенсіонер / інвалід)</label>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Розрахувати</button>
+        </form>
+
+        @if (Model.CalculatedPrice > 0)
+        {
+            <div class="mt-4 alert alert-success">
+                <h4>Вартість полісу: @Model.CalculatedPrice грн</h4>
+            </div>
+        }
+    </div>
+</div>
